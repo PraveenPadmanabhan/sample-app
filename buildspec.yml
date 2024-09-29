@@ -5,6 +5,9 @@ phases:
     commands:
       - echo Logging in to Amazon ECR...
       - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 886159222811.dkr.ecr.us-east-1.amazonaws.com
+      - mkdir -p $(dirname $KUBECONFIG)  # Create directory for kubeconfig
+      - echo "$KUBE_CONFIG_CONTENT" > $KUBECONFIG  # Set Kubeconfig from environment variable
+      - cat $KUBECONFIG  # Optional: Print the kubeconfig for debugging (remove in production)
   build:
     commands:
       - echo Build started on `date`
